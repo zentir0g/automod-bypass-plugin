@@ -48,7 +48,7 @@ Welcome to the **AutoModBypass** plugin, a powerful tool designed to help you by
 
 ## Video Guide
 
-Watch the video guide on YouTube: [AutoModBypass Video Guide](https://www.youtube.com/watch?v=your-video-id)
+Watch the video guide on YouTube: [AutoModBypass Video Guide](https://www.youtube.com/watch?v=r-lwXLCC75A)
 
 ---
 
