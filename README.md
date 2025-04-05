@@ -54,7 +54,7 @@ Watch the video guide on YouTube: [AutoModBypass Video Guide](https://www.youtub
 
 ## Community Support 👥
 
-Join our community for updates, support, and discussions: [Discord Community](https://discord.gg/W6JfvA4y66).
+Join our community for updates, support, and discussions: [Discord Community](https://discord.com/invite/nCyKKRAC9u).
 
 ---
 
