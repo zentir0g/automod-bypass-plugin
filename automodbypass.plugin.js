@@ -4,7 +4,7 @@
  * @authorId 333014456399560705
  * @version 1.0.0
  * @description Changes the text with Unicode to bypass AutoMod.
- * @invite W6JfvA4y66
+ * @invite nCyKKRAC9u
  */
 
 module.exports = (_ => {
