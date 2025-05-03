@@ -2,14 +2,17 @@
  * @name AutoModBypass
  * @author Harry Uchiha (z_zx)
  * @authorId 333014456399560705
- * @version 1.0.0
- * @description Changes the text with Unicode to bypass AutoMod.
+ * @version 1.0.1
+ * @description Changes the text with Unicode to bypass AutoMod. Disabled by default.
  * @invite nCyKKRAC9u
  */
 
 module.exports = (_ => {
 	const changeLog = {
-		
+		"1.0.1": {
+			title: "Changes",
+			items: ["Plugin now disabled by default for all channels"]
+		}
 	};
 	
 	return !window.BDFDB_Global || (!window.BDFDB_Global.loaded && !window.BDFDB_Global.started) ? class {
@@ -66,11 +69,11 @@ module.exports = (_ => {
 			render() {
 				return BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ChannelTextAreaButton, {
 					className: BDFDB.DOMUtils.formatClassName(BDFDB.disCN._writeuppercasequicktogglebutton, BDFDB.disCN._writeuppercasequicktogglebuttonenabled, BDFDB.disCN.textareapickerbutton),
-					iconSVG: channelBlacklist.indexOf(this.props.channelId) == -1 ? `<svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2V7zm0 8h2v2h-2v-2z"/></svg>` : `<svg width="24" height="24" viewBox="0 0 24 24"><path fill="${BDFDB.DiscordConstants.ColorsCSS.STATUS_DANGER}" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2V7zm0 8h2v2h-2v-2z"/></svg>`,
+					iconSVG: channelWhitelist.indexOf(this.props.channelId) > -1 ? `<svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2V7zm0 8h2v2h-2v-2z"/></svg>` : `<svg width="24" height="24" viewBox="0 0 24 24"><path fill="${BDFDB.DiscordConstants.ColorsCSS.STATUS_DANGER}" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2V7zm0 8h2v2h-2v-2z"/></svg>`,
 					nativeClass: true,
 					onClick: _ => {
-						if (channelBlacklist.indexOf(this.props.channelId) > -1) BDFDB.ArrayUtils.remove(channelBlacklist, this.props.channelId, true);
-						else channelBlacklist.push(this.props.channelId);
+						if (channelWhitelist.indexOf(this.props.channelId) > -1) BDFDB.ArrayUtils.remove(channelWhitelist, this.props.channelId, true);
+						else channelWhitelist.push(this.props.channelId);
 						for (let type in toggleButtons) BDFDB.ReactUtils.forceUpdate(toggleButtons[type]);
 					}
 				});
@@ -79,7 +82,8 @@ module.exports = (_ => {
 		
 		const symbols = [".", "!", "¡", "?", "¿"], spaces = ["\n", "\r", "\t", " ", "  ", "   ", "    "];
 		
-		const channelBlacklist = [];
+		// Changed from blacklist to whitelist - empty means disabled by default
+		const channelWhitelist = [];
 		const toggleButtons = {};
 		
 		return class WriteUpperCase extends Plugin {
@@ -154,7 +158,11 @@ module.exports = (_ => {
 
 			processChannelTextAreaEditor (e) {
 				let type = e.instance.props.type.analyticsName || e.instance.props.type || "";
-				if (e.instance.props.textValue && e.instance.props.focused && (!type || this.settings.places[type] || !this.defaults.places[type]) && (!this.settings.general.addQuickToggle || channelBlacklist.indexOf(e.instance.props.channel.id) == -1) && e.instance.props.richValue && e.instance.props.richValue[0] && !e.instance.props.richValue[0].command) {
+				if (e.instance.props.textValue && e.instance.props.focused && 
+					(!type || this.settings.places[type] || !this.defaults.places[type]) && 
+					(!this.settings.general.addQuickToggle || channelWhitelist.indexOf(e.instance.props.channel.id) > -1) && 
+					e.instance.props.richValue && e.instance.props.richValue[0] && 
+					!e.instance.props.richValue[0].command) {
 					let string = e.instance.props.textValue;
 					let newString = this.parse(string);
 					if (string != newString) {
