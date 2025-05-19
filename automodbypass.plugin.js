@@ -1,7 +1,7 @@
 /**
  * @name AutoModBypass
- * @author Harry Uchiha (z_zx)
- * @authorId 333014456399560705
+ * @author Harry Uchiha (vvoh)
+ * @authorId 1135886879372357764
  * @version 1.0.1
  * @description Changes the text with Unicode to bypass AutoMod. Disabled by default.
  * @invite nCyKKRAC9u
